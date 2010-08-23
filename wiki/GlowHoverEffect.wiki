@@ -1,5 +1,5 @@
+#summary Glow/Hover effect on flash object/movieclips
 #labels glow,hover
-#Glow/Hover effect on flash object/movieclips
 = Glow/Hover actionscript - source =
 
 {{{
