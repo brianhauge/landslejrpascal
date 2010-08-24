@@ -1,4 +1,4 @@
-#summary How to initialize the Pascal on a object
+#summary How to initialize the Pascal on an object
 
 = How to initialize the Pascal package on a object =
 
