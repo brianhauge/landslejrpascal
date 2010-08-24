@@ -1,0 +1,43 @@
+#summary How to initialize the Pascal on a object
+
+= How to initialize the Pascal package on a object =
+
+== Seperate "Actions" layer ==
+In my example, I've created a seperate "Actions" layer to contain all the initializing of the *Pascal* package on the element.
+
+http://landslejrpascal.googlecode.com/files/pascal-flash-timeline-actions-layer.png
+
+== Import and initialize Pascal on a object ==
+
+In the "Actions - frame" part of the *Actions* layer I start by importing the Pascal package
+
+{{{
+import com.fdf.pascal.Pascal;
+}}}
+
+The *Pascal* constructor takes to required arguments:
+  # _this.stage_ is the current movie stage
+  # _laboratoryObject_ is the object which the class is going to be working on
+
+{{{
+public function Pascal(theStage, laboratoryObject : MovieClip) {
+}}}
+
+*Important!*
+The _laboratoryObject_ argument have to be set on the object inside Flash
+
+=== Example ===
+
+In order to initialize the Pascal package on the object named _dkmap_ the code looks like this
+
+{{{
+import com.fdf.pascal.Pascal;
+
+new Pascal(this.stage, dkmap);
+}}}
+
+http://landslejrpascal.googlecode.com/files/pascal-flash-initialize-pascal.png
+
+At this very time, I have implemented the Glow/Hover effect in the class so the outcome looks like this, when hover the dkmap object 
+
+http://landslejrpascal.googlecode.com/files/pascal-flash-dkmap-glow-hover.png
