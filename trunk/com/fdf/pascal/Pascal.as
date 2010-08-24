@@ -10,6 +10,9 @@ package com.fdf.pascal {
 	import flash.ui.Keyboard;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
+	import flash.events.MouseEvent;
+	import flash.filters.GlowFilter;
+
 
 	public class Pascal {
 
@@ -25,10 +28,32 @@ package com.fdf.pascal {
 
 			trace(laboratoryObject);
 
-			//this.currentLaboratoryObject = laboratoryObject;
+			this.currentLaboratoryObject = laboratoryObject;
 
+			laboratoryObject.addEventListener(MouseEvent.MOUSE_OVER, addGlow);
+			laboratoryObject.addEventListener(MouseEvent.MOUSE_OUT, removeGlow);
 			//stage.addEventListener(Event.RESIZE, onResize);
 			theStage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+		}	
+		
+		/**
+		 * Add glow - for hover
+		 */
+		function addGlow(event:MouseEvent):void {
+			var filt:GlowFilter = new GlowFilter;
+			filt.color = 0xCCCC00;
+			filt.blurX = 9;
+			filt.blurY = 9;
+			this.currentLaboratoryObject.filters = [filt];
+			this.currentLaboratoryObject.buttonMode = true;
+			this.currentLaboratoryObject.useHandCursor = true;
+		}
+
+		/**
+		 * Remove glow - for mouseout
+		 */
+		public function removeGlow(event:MouseEvent):void {
+			this.currentLaboratoryObject.filters = [];
 		}
 
 		/**
