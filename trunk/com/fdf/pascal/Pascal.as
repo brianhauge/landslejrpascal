@@ -1,4 +1,4 @@
-/*
+﻿/*
 
 */
 
@@ -13,6 +13,8 @@ package com.fdf.pascal {
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
 	import flash.filters.GlowFilter;
+	import fl.transitions.*;
+	import fl.transitions.easing.*;
 
 
 	public class Pascal {
@@ -26,6 +28,7 @@ package com.fdf.pascal {
 		public var originalX : Number;
 		public var originalY : Number;
 		public var isScaledUp : Boolean;
+		public var overlay : Overlay;
 
 		public function Pascal(theStage, laboratoryObject : MovieClip) {
 
@@ -37,10 +40,12 @@ package com.fdf.pascal {
 			this.originalX = this.currentLaboratoryObject.x;
 			this.originalY = this.currentLaboratoryObject.y;
 			this.isScaledUp = false;
+			this.stage = theStage;
+			this.overlay = new Overlay();
 
-			laboratoryObject.addEventListener(MouseEvent.MOUSE_OVER, addGlow);
-			laboratoryObject.addEventListener(MouseEvent.MOUSE_OUT, removeGlow);
-			laboratoryObject.addEventListener(MouseEvent.CLICK, scalingHandler);
+			this.currentLaboratoryObject.addEventListener(MouseEvent.MOUSE_OVER, addGlow);
+			this.currentLaboratoryObject.addEventListener(MouseEvent.MOUSE_OUT, removeGlow);
+			this.currentLaboratoryObject.addEventListener(MouseEvent.CLICK, scalingHandler);
 
 
 			//theStage.addEventListener(Event.RESIZE, onResize);
@@ -66,11 +71,27 @@ package com.fdf.pascal {
 		 * Zoom in
 		 */
 		function zoomIn(event:MouseEvent):void {
+			
+			/*
+				fjern click event fra elementet
+			*/
+			
+			this.currentLaboratoryObject.removeEventListener(MouseEvent.CLICK, scalingHandler);
+			
+			/*
+				tilføj overlay til stage samt clickevent til overlay
+			*/
+			
+			this.stage.addChild(overlay);
+			this.overlay.addEventListener(MouseEvent.CLICK, scalingHandler);
+			
 			/*
 				skaler element op
 			*/
+					
 			this.currentLaboratoryObject.width = 500;
 			this.currentLaboratoryObject.scaleY = this.currentLaboratoryObject.scaleX;
+			
 			/*
 				bring element forrest
 			*/
@@ -78,20 +99,39 @@ package com.fdf.pascal {
 			this.currentLaboratoryObject.parent.setChildIndex(this.currentLaboratoryObject, this.currentLaboratoryObject.parent.numChildren - 1);
 
 			/*
-				centrer element
+				centrer element og lidt transitions
 			*/
 			this.currentLaboratoryObject.x = (this.currentLaboratoryObject.stage.stageWidth / 2) - (this.currentLaboratoryObject.width / 2);
 			this.currentLaboratoryObject.y = (this.currentLaboratoryObject.stage.stageHeight / 2) - (this.currentLaboratoryObject.height / 2);
+			var myTransitionManager:TransitionManager = new TransitionManager(this.currentLaboratoryObject);
+  			myTransitionManager.startTransition({type:Zoom, direction:Transition.IN, duration:1, easing:Bounce.easeOut});
 		}
 
 		/**
 		 * Zoom out
 		 */
 		function zoomOut(event:MouseEvent):void {
+			
+			/*
+				fjern clickevent fra overlay og overlay fra stage
+			*/
+			this.overlay.removeEventListener(MouseEvent.CLICK, scalingHandler);
+			this.stage.removeChild(overlay);
+			
+			/*
+				Placer element på oprindelig plads
+			*/
+
 			this.currentLaboratoryObject.width = this.originalWidth;
 			this.currentLaboratoryObject.height = this.originalHeight;
 			this.currentLaboratoryObject.x = this.originalX;
 			this.currentLaboratoryObject.y = this.originalY;
+			
+			/*
+				Tilføj click event til object igen
+			*/
+			
+			this.currentLaboratoryObject.addEventListener(MouseEvent.CLICK, scalingHandler);
 		}
 
 		/**
@@ -125,7 +165,7 @@ package com.fdf.pascal {
 		public function reduceLaboratoryObject() : void {}
 
         /**
-		 * Tilpas galleriet i forhold til st�rrelsen p� Flash (http://felix-sanchez.dk/3d-galleri-i-flash-og-actionscript-med-five3d/)
+		 * Tilpas galleriet i forhold til st¿rrelsen p Flash (http://felix-sanchez.dk/3d-galleri-i-flash-og-actionscript-med-five3d/)
          */
         
 		public function onResize(event:Event) : void {
