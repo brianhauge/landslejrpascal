@@ -5,6 +5,7 @@
 package com.fdf.pascal {	
 
 	import flash.display.MovieClip;
+	import com.fdf.pascal.effects.Overlay;
 	import flash.display.Stage;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Scene;
@@ -41,7 +42,7 @@ package com.fdf.pascal {
 			this.originalY = this.currentLaboratoryObject.y;
 			this.isScaledUp = false;
 			this.stage = theStage;
-			this.overlay = new Overlay();
+			
 
 			this.currentLaboratoryObject.addEventListener(MouseEvent.MOUSE_OVER, addGlow);
 			this.currentLaboratoryObject.addEventListener(MouseEvent.MOUSE_OUT, removeGlow);
@@ -79,10 +80,11 @@ package com.fdf.pascal {
 			this.currentLaboratoryObject.removeEventListener(MouseEvent.CLICK, scalingHandler);
 			
 			/*
-				tilføj overlay til stage samt clickevent til overlay
+				opret overlay og tilføj denne til stage, samt clickevent på overlay
 			*/
 			
-			this.stage.addChild(overlay);
+			this.overlay = new Overlay(this.stage);
+			this.stage.addChild(this.overlay);
 			this.overlay.addEventListener(MouseEvent.CLICK, scalingHandler);
 			
 			/*
