@@ -16,6 +16,7 @@ package com.fdf.pascal {
 	import flash.filters.GlowFilter;
 	import fl.transitions.*;
 	import fl.transitions.easing.*;
+	import Board;
 
 
 	public class Pascal {
@@ -30,6 +31,7 @@ package com.fdf.pascal {
 		public var originalY : Number;
 		public var isScaledUp : Boolean;
 		public var overlay : Overlay;
+		public var board : Board;
 
 		public function Pascal(theStage, laboratoryObject : MovieClip) {
 
@@ -78,6 +80,7 @@ package com.fdf.pascal {
 			*/
 			
 			this.currentLaboratoryObject.removeEventListener(MouseEvent.CLICK, scalingHandler);
+			trace(this.currentLaboratoryObject.name);
 			
 			/*
 				opret overlay og tilføj denne til stage, samt clickevent på overlay
@@ -86,27 +89,32 @@ package com.fdf.pascal {
 			this.overlay = new Overlay(this.stage);
 			this.stage.addChild(this.overlay);
 			this.overlay.addEventListener(MouseEvent.CLICK, scalingHandler);
+			this.currentLaboratoryObject.visible = false;
+			this.board = new Board();
+			this.stage.addChild(this.board);
+
 			
 			/*
 				skaler element op
 			*/
 					
-			this.currentLaboratoryObject.width = 500;
-			this.currentLaboratoryObject.scaleY = this.currentLaboratoryObject.scaleX;
+			this.board.width = 850;
+			this.board.scaleY = this.board.scaleX;
 			
 			/*
 				bring element forrest
 			*/
 
-			this.currentLaboratoryObject.parent.setChildIndex(this.currentLaboratoryObject, this.currentLaboratoryObject.parent.numChildren - 1);
+			this.board.parent.setChildIndex(this.board, this.board.parent.numChildren - 1);
 
 			/*
 				centrer element og lidt transitions
 			*/
-			this.currentLaboratoryObject.x = (this.currentLaboratoryObject.stage.stageWidth / 2) - (this.currentLaboratoryObject.width / 2);
-			this.currentLaboratoryObject.y = (this.currentLaboratoryObject.stage.stageHeight / 2) - (this.currentLaboratoryObject.height / 2);
-			var myTransitionManager:TransitionManager = new TransitionManager(this.currentLaboratoryObject);
+			this.board.x = (this.board.stage.stageWidth / 2) - (this.board.width / 2);
+			this.board.y = (this.board.stage.stageHeight / 2) - (this.board.height / 2);
+			var myTransitionManager:TransitionManager = new TransitionManager(this.board);
   			myTransitionManager.startTransition({type:Zoom, direction:Transition.IN, duration:1, easing:Bounce.easeOut});
+			
 		}
 
 		/**
@@ -114,9 +122,13 @@ package com.fdf.pascal {
 		 */
 		function zoomOut(event:MouseEvent):void {
 			
+			
+			this.currentLaboratoryObject.visible = true;
+			this.stage.removeChild(this.board);
 			/*
 				fjern clickevent fra overlay og overlay fra stage
 			*/
+			
 			this.overlay.removeEventListener(MouseEvent.CLICK, scalingHandler);
 			this.stage.removeChild(overlay);
 			
