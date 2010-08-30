@@ -16,7 +16,6 @@ package com.fdf.pascal {
 	import flash.filters.GlowFilter;
 	import fl.transitions.*;
 	import fl.transitions.easing.*;
-	import Board;
 
 
 	public class Pascal {
@@ -31,19 +30,26 @@ package com.fdf.pascal {
 		public var originalY : Number;
 		public var isScaledUp : Boolean;
 		public var overlay : Overlay;
-		public var board : Board;
+		public var tempLaboratoryObject : MovieClip;
+		public var scaleWidth : Number;
+		public var scaleX : Number;
+		public var scaleY : Number;
 
-		public function Pascal(theStage, laboratoryObject : MovieClip) {
+		public function Pascal(theStage, laboratoryObject : MovieClip, scaleWidth, scaleX = 0, scaleY = 0) {
 
 			trace("Constructor er loadet");
 
 			this.currentLaboratoryObject = laboratoryObject;
+			this.tempLaboratoryObject = laboratoryObject;
 			this.originalWidth = laboratoryObject.width;
 			this.originalHeight = laboratoryObject.height;
 			this.originalX = this.currentLaboratoryObject.x;
 			this.originalY = this.currentLaboratoryObject.y;
 			this.isScaledUp = false;
 			this.stage = theStage;
+			this.scaleWidth = scaleWidth;
+			this.scaleX = scaleX;
+			this.scaleY = scaleY;
 			
 
 			this.currentLaboratoryObject.addEventListener(MouseEvent.MOUSE_OVER, addGlow);
@@ -55,6 +61,7 @@ package com.fdf.pascal {
 			//theStage.onResize = function() {this.onResize()};
 
 			theStage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+			
 		}	
 
 		/**
@@ -80,51 +87,62 @@ package com.fdf.pascal {
 			*/
 			
 			this.currentLaboratoryObject.removeEventListener(MouseEvent.CLICK, scalingHandler);
-			trace(this.currentLaboratoryObject.name);
-			
+						
 			/*
-				opret overlay og tilføj denne til stage, samt clickevent på overlay
+				opret overlay og tilfoej denne til stage, samt clickevent på overlay
 			*/
 			
 			this.overlay = new Overlay(this.stage);
 			this.stage.addChild(this.overlay);
-			this.overlay.addEventListener(MouseEvent.CLICK, scalingHandler);
-			this.currentLaboratoryObject.visible = false;
-			this.board = new Board();
-			this.stage.addChild(this.board);
+			
+			
+			/*
+				tilfoej tempLavatoryObject til stage
+			*/
+			
+			this.stage.addChild(this.tempLaboratoryObject);
 
 			
 			/*
 				skaler element op
 			*/
 					
-			this.board.width = 850;
-			this.board.scaleY = this.board.scaleX;
+			this.tempLaboratoryObject.width = this.scaleWidth;
+			this.tempLaboratoryObject.scaleY = this.tempLaboratoryObject.scaleX;
 			
 			/*
 				bring element forrest
 			*/
 
-			this.board.parent.setChildIndex(this.board, this.board.parent.numChildren - 1);
+			this.tempLaboratoryObject.parent.setChildIndex(this.tempLaboratoryObject, this.tempLaboratoryObject.parent.numChildren - 1);
 
 			/*
 				centrer element og lidt transitions
 			*/
-			this.board.x = (this.board.stage.stageWidth / 2) - (this.board.width / 2);
-			this.board.y = (this.board.stage.stageHeight / 2) - (this.board.height / 2);
-			var myTransitionManager:TransitionManager = new TransitionManager(this.board);
+			this.tempLaboratoryObject.x = (this.tempLaboratoryObject.stage.stageWidth / 2) - (this.tempLaboratoryObject.width / 2) + this.scaleX;
+			this.tempLaboratoryObject.y = (this.tempLaboratoryObject.stage.stageHeight / 2) - (this.tempLaboratoryObject.height / 2)  + this.scaleY;
+			var myTransitionManager:TransitionManager = new TransitionManager(this.tempLaboratoryObject);
   			myTransitionManager.startTransition({type:Zoom, direction:Transition.IN, duration:1, easing:Bounce.easeOut});
-			
+			myTransitionManager.addEventListener("allTransitionsInDone", addOverlayClick);
+
+
+			this.currentLaboratoryObject.removeEventListener(MouseEvent.MOUSE_OVER, addGlow);
+			this.currentLaboratoryObject.useHandCursor = false;
+
+		}
+		
+		
+		// imageLoaded2 kaldes, når billedet er indlæst.
+		function addOverlayClick(e:Event):void {
+			trace("The animation has finished!");
+			this.overlay.addEventListener(MouseEvent.CLICK, scalingHandler);
 		}
 
 		/**
 		 * Zoom out
 		 */
 		function zoomOut(event:MouseEvent):void {
-			
-			
-			this.currentLaboratoryObject.visible = true;
-			this.stage.removeChild(this.board);
+			this.currentLaboratoryObject.addEventListener(MouseEvent.MOUSE_OVER, addGlow);
 			/*
 				fjern clickevent fra overlay og overlay fra stage
 			*/
@@ -146,6 +164,7 @@ package com.fdf.pascal {
 			*/
 			
 			this.currentLaboratoryObject.addEventListener(MouseEvent.CLICK, scalingHandler);
+			
 		}
 
 		/**
