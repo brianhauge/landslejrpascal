@@ -2,14 +2,11 @@
 
 */
 
-package com.fdf.pascal {	
+package com.fdf.pascal.effects {	
 
 	import flash.display.MovieClip;
-	import com.fdf.pascal.effects.Overlay;
 	import com.fdf.pascal.data.XmlLoader;
-	import flash.display.Stage;
 	import flash.display.DisplayObjectContainer;
-	import flash.display.Scene;
 	import flash.ui.Keyboard;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
@@ -17,41 +14,36 @@ package com.fdf.pascal {
 	import flash.filters.GlowFilter;
 	import fl.transitions.*;
 	import fl.transitions.easing.*;
+	import fl.transitions.Tween;
 
 
-	public class Pascal {
+
+	public class FigureHandler {
 
 		public var currentLaboratoryObject : MovieClip;
-		public var stage : Stage;
-		public var _scene : Scene;
 		public var numChildren : DisplayObjectContainer;
 		public var originalWidth : Number;
 		public var originalHeight : Number;
 		public var originalX : Number;
 		public var originalY : Number;
 		public var isScaledUp : Boolean;
-		public var overlay : Overlay;
 		public var tempLaboratoryObject : MovieClip;
 		public var scaleWidth : Number;
 		public var scaleX : Number;
 		public var scaleY : Number;
+		public var portrait4 : MovieClip;
 
-		public function Pascal(theStage, laboratoryObject : MovieClip, scaleWidth, scaleX = 0, scaleY = 0) {
+		public function FigureHandler(portrait4, laboratoryObject : MovieClip) {
 
-			trace("Constructor er loadet");
+			trace("FigureHandler Constructor er loadet");
 
 			this.currentLaboratoryObject = laboratoryObject;
 			this.tempLaboratoryObject = laboratoryObject;
-			this.originalWidth = laboratoryObject.width;
-			this.originalHeight = laboratoryObject.height;
 			this.originalX = this.currentLaboratoryObject.x;
 			this.originalY = this.currentLaboratoryObject.y;
 			this.isScaledUp = false;
-			this.stage = theStage;
-			this.scaleWidth = scaleWidth;
-			this.scaleX = scaleX;
-			this.scaleY = scaleY;
-			
+			this.portrait4 = portrait4;
+					
 
 			this.currentLaboratoryObject.addEventListener(MouseEvent.MOUSE_OVER, addGlow);
 			this.currentLaboratoryObject.addEventListener(MouseEvent.MOUSE_OUT, removeGlow);
@@ -61,7 +53,7 @@ package com.fdf.pascal {
 			//theStage.addEventListener(Event.RESIZE, onResize);
 			//theStage.onResize = function() {this.onResize()};
 
-			theStage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+			portrait4.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 			
 		}	
 
@@ -90,27 +82,20 @@ package com.fdf.pascal {
 			
 			this.currentLaboratoryObject.removeEventListener(MouseEvent.CLICK, scalingHandler);
 						
-			/*
-				opret overlay og tilfoej denne til stage, samt clickevent på overlay
-			*/
-			
-			this.overlay = new Overlay(this.stage);
-			this.stage.addChild(this.overlay);
-			
+
 			
 			/*
 				tilfoej tempLavatoryObject til stage
 			*/
 			
-			this.stage.addChild(this.tempLaboratoryObject);
+			this.portrait4.addChild(this.tempLaboratoryObject);
 
 			
 			/*
 				skaler element op
 			*/
 					
-			this.tempLaboratoryObject.width = this.scaleWidth;
-			this.tempLaboratoryObject.scaleY = this.tempLaboratoryObject.scaleX;
+			
 			
 			/*
 				bring element forrest
@@ -123,9 +108,15 @@ package com.fdf.pascal {
 			*/
 			this.tempLaboratoryObject.x = (this.tempLaboratoryObject.stage.stageWidth / 2) - (this.tempLaboratoryObject.width / 2) + this.scaleX;
 			this.tempLaboratoryObject.y = (this.tempLaboratoryObject.stage.stageHeight / 2) - (this.tempLaboratoryObject.height / 2)  + this.scaleY;
-			var myTransitionManager:TransitionManager = new TransitionManager(this.tempLaboratoryObject);
-  			myTransitionManager.startTransition({type:Zoom, direction:Transition.IN, duration:1, easing:Bounce.easeOut});
-			myTransitionManager.addEventListener("allTransitionsInDone", addOverlayClick);
+			//var myTransitionManager:TransitionManager = new TransitionManager(this.tempLaboratoryObject);
+  			//myTransitionManager.startTransition({type:Fly, direction:Transition.IN, duration:3, easing:Elastic.easeOut, startPoint:9});
+			//myTransitionManager.addEventListener("allTransitionsInDone", animationFinished);
+			
+			var moveX:Tween = new Tween(this.tempLaboratoryObject, "x", Elastic.easeOut, this.tempLaboratoryObject.x, 70, 1, true);
+			var moveY:Tween = new Tween(this.tempLaboratoryObject, "y", Elastic.easeOut, this.tempLaboratoryObject.y, 20, 1, true);
+			this.portrait4.getChildAt(1).visible = false;
+			this.portrait4.getChildAt(2).visible = false;
+
 
 
 			this.currentLaboratoryObject.removeEventListener(MouseEvent.MOUSE_OVER, addGlow);
@@ -136,9 +127,9 @@ package com.fdf.pascal {
 		
 		
 		// imageLoaded2 kaldes, når billedet er indlæst.
-		function addOverlayClick(e:Event):void {
+		function animationFinished(e:Event):void {
 			trace("The animation has finished!");
-			this.overlay.addEventListener(MouseEvent.CLICK, scalingHandler);
+
 		}
 
 		/**
@@ -147,13 +138,7 @@ package com.fdf.pascal {
 		function zoomOut(event:MouseEvent):void {
 			this.tempLaboratoryObject.gotoAndStop(1);
 			this.currentLaboratoryObject.addEventListener(MouseEvent.MOUSE_OVER, addGlow);
-			/*
-				fjern clickevent fra overlay og overlay fra stage
-			*/
-			
-			this.overlay.removeEventListener(MouseEvent.CLICK, scalingHandler);
-			this.stage.removeChild(overlay);
-			
+						
 			/*
 				Placer element på oprindelig plads
 			*/
@@ -162,6 +147,7 @@ package com.fdf.pascal {
 			this.currentLaboratoryObject.height = this.originalHeight;
 			this.currentLaboratoryObject.x = this.originalX;
 			this.currentLaboratoryObject.y = this.originalY;
+			
 			
 			/*
 				Tilføj click event til object igen
@@ -190,26 +176,6 @@ package com.fdf.pascal {
 		public function removeGlow(event:MouseEvent):void {
 			this.currentLaboratoryObject.filters = [];
 		}
-
-		/**
-		 * Enlarges the current laboratoryObject
-		 */
-		public function enlargeLaboratoryObject() : void {}
-
-		/**
-		 * Reduces the current laboratoryObject
-		 */
-		public function reduceLaboratoryObject() : void {}
-
-        /**
-		 * Tilpas galleriet i forhold til st¿rrelsen p Flash (http://felix-sanchez.dk/3d-galleri-i-flash-og-actionscript-med-five3d/)
-         */
-        
-		public function onResize(event:Event) : void {
-            /*this._scene.x = Math.round(stage.stageWidth/2);
-            this._scene.y = Math.round(stage.stageHeight/2);*/
-        }
-
 
 		/**
 		 * Handler af onKeyDown
