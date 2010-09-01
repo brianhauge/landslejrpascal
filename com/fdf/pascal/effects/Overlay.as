@@ -1,4 +1,4 @@
-﻿package com.fdf.pascal.effects {
+package com.fdf.pascal.effects {
 	import flash.display.MovieClip;
 	import flash.filters.GlowFilter;
 	import flash.events.MouseEvent;
