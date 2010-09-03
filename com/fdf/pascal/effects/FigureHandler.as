@@ -80,7 +80,7 @@ package com.fdf.pascal.effects {
 				fjern click event fra elementet
 			*/
 			
-			this.currentLaboratoryObject.removeEventListener(MouseEvent.CLICK, scalingHandler);
+			//this.currentLaboratoryObject.removeEventListener(MouseEvent.CLICK, scalingHandler);
 						
 
 			
@@ -108,18 +108,22 @@ package com.fdf.pascal.effects {
 			*/
 			this.tempLaboratoryObject.x = (this.tempLaboratoryObject.stage.stageWidth / 2) - (this.tempLaboratoryObject.width / 2) + this.scaleX;
 			this.tempLaboratoryObject.y = (this.tempLaboratoryObject.stage.stageHeight / 2) - (this.tempLaboratoryObject.height / 2)  + this.scaleY;
-			//var myTransitionManager:TransitionManager = new TransitionManager(this.tempLaboratoryObject);
-  			//myTransitionManager.startTransition({type:Fly, direction:Transition.IN, duration:3, easing:Elastic.easeOut, startPoint:9});
+			
+			//var myTransitionManager:TransitionManager = new TransitionManager(this.portrait4.getChildAt(1));
+  			//myTransitionManager.startTransition({type:Fade, direction:Transition.OUT, duration:3, easing:Strong.easeOut});
 			//myTransitionManager.addEventListener("allTransitionsInDone", animationFinished);
 			
-			var moveX:Tween = new Tween(this.tempLaboratoryObject, "x", Elastic.easeOut, this.tempLaboratoryObject.x, 70, 1, true);
-			var moveY:Tween = new Tween(this.tempLaboratoryObject, "y", Elastic.easeOut, this.tempLaboratoryObject.y, 20, 1, true);
+			var moveX:Tween = new Tween(this.tempLaboratoryObject, "x", Strong.easeOut, this.tempLaboratoryObject.x, 70, 1, true);
+			var moveY:Tween = new Tween(this.tempLaboratoryObject, "y", Bounce.easeOut, this.tempLaboratoryObject.y, 20, 1, true);
 			this.portrait4.getChildAt(1).visible = false;
 			this.portrait4.getChildAt(2).visible = false;
+			//TransitionManager.start(this.portrait4.getChildAt(1), {type:Fade, direction:Transition.OUT, duration:9, easing:Strong.easeOut});
+			//TransitionManager.start(img1_mc, {type:Fade, direction:Transition.IN, duration:9, easing:Strong.easeOut});
 
 
 
-			this.currentLaboratoryObject.removeEventListener(MouseEvent.MOUSE_OVER, addGlow);
+
+			//this.currentLaboratoryObject.removeEventListener(MouseEvent.MOUSE_OVER, addGlow);
 			this.currentLaboratoryObject.useHandCursor = false;
 			this.tempLaboratoryObject.gotoAndStop(2);
 
@@ -136,7 +140,8 @@ package com.fdf.pascal.effects {
 		 * Zoom out
 		 */
 		function zoomOut(event:MouseEvent):void {
-			this.tempLaboratoryObject.gotoAndStop(1);
+			this.portrait4.getChildAt(1).visible = true;
+			this.portrait4.getChildAt(2).visible = true;
 			this.currentLaboratoryObject.addEventListener(MouseEvent.MOUSE_OVER, addGlow);
 						
 			/*
@@ -145,8 +150,11 @@ package com.fdf.pascal.effects {
 
 			this.currentLaboratoryObject.width = this.originalWidth;
 			this.currentLaboratoryObject.height = this.originalHeight;
-			this.currentLaboratoryObject.x = this.originalX;
-			this.currentLaboratoryObject.y = this.originalY;
+			var moveX:Tween = new Tween(this.tempLaboratoryObject, "x", Strong.easeOut, 70, this.originalX, 1, true);
+			var moveY:Tween = new Tween(this.tempLaboratoryObject, "y", Bounce.easeOut, 20, this.originalY, 1, true);
+			
+			//this.currentLaboratoryObject.x = this.originalX;
+			//this.currentLaboratoryObject.y = this.originalY;
 			
 			
 			/*
