@@ -6,7 +6,6 @@ package com.fdf.pascal.effects {
 
 	import flash.display.MovieClip;
 	import com.fdf.pascal.data.XmlLoader;
-	import flash.display.DisplayObjectContainer;
 	import flash.ui.Keyboard;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
@@ -21,7 +20,6 @@ package com.fdf.pascal.effects {
 	public class FigureHandler {
 
 		public var currentLaboratoryObject : MovieClip;
-		public var numChildren : DisplayObjectContainer;
 		public var originalWidth : Number;
 		public var originalHeight : Number;
 		public var originalX : Number;
@@ -32,8 +30,10 @@ package com.fdf.pascal.effects {
 		public var scaleX : Number;
 		public var scaleY : Number;
 		public var portrait4 : MovieClip;
+		public var pos : String;
+		public var t3 : XmlLoader;
 
-		public function FigureHandler(portrait4, laboratoryObject : MovieClip) {
+		public function FigureHandler(portrait4, laboratoryObject : MovieClip, pos) {
 
 			trace("FigureHandler Constructor er loadet");
 
@@ -43,17 +43,13 @@ package com.fdf.pascal.effects {
 			this.originalY = this.currentLaboratoryObject.y;
 			this.isScaledUp = false;
 			this.portrait4 = portrait4;
-					
-
+			this.pos = pos;
 			this.currentLaboratoryObject.addEventListener(MouseEvent.MOUSE_OVER, addGlow);
 			this.currentLaboratoryObject.addEventListener(MouseEvent.MOUSE_OUT, removeGlow);
 			this.currentLaboratoryObject.addEventListener(MouseEvent.CLICK, scalingHandler);
-
-
-			//theStage.addEventListener(Event.RESIZE, onResize);
-			//theStage.onResize = function() {this.onResize()};
-
-			portrait4.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+			this.portrait4.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+			this.t3 = new XmlLoader();
+			this.t3.x = 1;
 			
 		}	
 
@@ -66,7 +62,7 @@ package com.fdf.pascal.effects {
 				this.isScaledUp = false;
 			} else {
 				this.zoomIn(event);
-				new XmlLoader(this.currentLaboratoryObject);
+				//new XmlLoader(this.currentLaboratoryObject);
 				this.isScaledUp = true;
 			}
 		}
@@ -76,26 +72,12 @@ package com.fdf.pascal.effects {
 		 */
 		function zoomIn(event:MouseEvent):void {
 			
-			/*
-				fjern click event fra elementet
-			*/
-			
-			//this.currentLaboratoryObject.removeEventListener(MouseEvent.CLICK, scalingHandler);
-						
-
 			
 			/*
 				tilfoej tempLavatoryObject til stage
 			*/
 			
 			this.portrait4.addChild(this.tempLaboratoryObject);
-
-			
-			/*
-				skaler element op
-			*/
-					
-			
 			
 			/*
 				bring element forrest
@@ -108,38 +90,28 @@ package com.fdf.pascal.effects {
 			*/
 			this.tempLaboratoryObject.x = (this.tempLaboratoryObject.stage.stageWidth / 2) - (this.tempLaboratoryObject.width / 2) + this.scaleX;
 			this.tempLaboratoryObject.y = (this.tempLaboratoryObject.stage.stageHeight / 2) - (this.tempLaboratoryObject.height / 2)  + this.scaleY;
-			
-			//var myTransitionManager:TransitionManager = new TransitionManager(this.portrait4.getChildAt(1));
-  			//myTransitionManager.startTransition({type:Fade, direction:Transition.OUT, duration:3, easing:Strong.easeOut});
-			//myTransitionManager.addEventListener("allTransitionsInDone", animationFinished);
-			
-			var moveX:Tween = new Tween(this.tempLaboratoryObject, "x", Strong.easeOut, this.tempLaboratoryObject.x, 70, 1, true);
+			if(this.pos == "tv") var moveX1:Tween = new Tween(this.tempLaboratoryObject, "x", Strong.easeOut, this.originalX, 0, 1, true);
+			if(this.pos == "th") var moveX2:Tween = new Tween(this.tempLaboratoryObject, "x", Strong.easeOut, this.originalX, 70, 1, true);
 			var moveY:Tween = new Tween(this.tempLaboratoryObject, "y", Bounce.easeOut, this.tempLaboratoryObject.y, 20, 1, true);
 			this.portrait4.getChildAt(1).visible = false;
 			this.portrait4.getChildAt(2).visible = false;
-			//TransitionManager.start(this.portrait4.getChildAt(1), {type:Fade, direction:Transition.OUT, duration:9, easing:Strong.easeOut});
-			//TransitionManager.start(img1_mc, {type:Fade, direction:Transition.IN, duration:9, easing:Strong.easeOut});
-
-
-
-
-			//this.currentLaboratoryObject.removeEventListener(MouseEvent.MOUSE_OVER, addGlow);
+			
+			this.portrait4.addChild(this.t3);
 			this.currentLaboratoryObject.useHandCursor = false;
 			this.tempLaboratoryObject.gotoAndStop(2);
 
 		}
 		
-		
-		// imageLoaded2 kaldes, når billedet er indlæst.
 		function animationFinished(e:Event):void {
 			trace("The animation has finished!");
-
+			
 		}
 
 		/**
 		 * Zoom out
 		 */
 		function zoomOut(event:MouseEvent):void {
+			this.portrait4.removeChild(this.t3);
 			this.portrait4.getChildAt(1).visible = true;
 			this.portrait4.getChildAt(2).visible = true;
 			this.currentLaboratoryObject.addEventListener(MouseEvent.MOUSE_OVER, addGlow);
@@ -150,13 +122,9 @@ package com.fdf.pascal.effects {
 
 			this.currentLaboratoryObject.width = this.originalWidth;
 			this.currentLaboratoryObject.height = this.originalHeight;
-			var moveX:Tween = new Tween(this.tempLaboratoryObject, "x", Strong.easeOut, 70, this.originalX, 1, true);
+			if(this.pos == "tv")  var moveX1:Tween = new Tween(this.tempLaboratoryObject, "x", Strong.easeOut, 0, this.originalX, 1, true);
+			if(this.pos == "th")  var moveX2:Tween = new Tween(this.tempLaboratoryObject, "x", Strong.easeOut, 70, this.originalX, 1, true);
 			var moveY:Tween = new Tween(this.tempLaboratoryObject, "y", Bounce.easeOut, 20, this.originalY, 1, true);
-			
-			//this.currentLaboratoryObject.x = this.originalX;
-			//this.currentLaboratoryObject.y = this.originalY;
-			
-			
 			/*
 				Tilføj click event til object igen
 			*/
@@ -198,6 +166,5 @@ package com.fdf.pascal.effects {
 					break;
 			}
 		}
-
 	}
 }
