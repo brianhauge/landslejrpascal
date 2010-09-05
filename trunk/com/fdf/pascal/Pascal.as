@@ -6,7 +6,7 @@ package com.fdf.pascal {
 
 	import flash.display.MovieClip;
 	import com.fdf.pascal.effects.Overlay;
-	import com.fdf.pascal.data.XmlLoader;
+	//import com.fdf.pascal.data.XmlLoader;
 	import flash.display.Stage;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Scene;
@@ -74,7 +74,7 @@ package com.fdf.pascal {
 				this.isScaledUp = false;
 			} else {
 				this.zoomIn(event);
-				new XmlLoader(this.currentLaboratoryObject);
+				//new XmlLoader(this.currentLaboratoryObject);
 				this.isScaledUp = true;
 			}
 		}
@@ -145,7 +145,10 @@ package com.fdf.pascal {
 		 * Zoom out
 		 */
 		function zoomOut(event:MouseEvent):void {
+			while (this.currentLaboratoryObject.numChildren) this.currentLaboratoryObject.removeChildAt(0);
+			trace(this.currentLaboratoryObject.numChildren);
 			this.tempLaboratoryObject.gotoAndStop(1);
+			
 			this.currentLaboratoryObject.addEventListener(MouseEvent.MOUSE_OVER, addGlow);
 			/*
 				fjern clickevent fra overlay og overlay fra stage
