@@ -2,7 +2,7 @@
 
 */
 
-package com.fdf.pascal.effects {	
+package com.fdf.pascal.handlers {	
 
 	import flash.display.MovieClip;
 	import com.fdf.pascal.data.XmlLoader;
@@ -31,9 +31,10 @@ package com.fdf.pascal.effects {
 		public var scaleY : Number;
 		public var portrait4 : MovieClip;
 		public var pos : String;
-		public var t3 : XmlLoader;
+		public var t3MovieClip : XmlLoader;
+		public var t3Url : String;
 
-		public function FigureHandler(portrait4, laboratoryObject : MovieClip, pos) {
+		public function FigureHandler(portrait4, laboratoryObject : MovieClip, pos, t3Url : String) {
 
 			trace("FigureHandler Constructor er loadet");
 
@@ -48,8 +49,9 @@ package com.fdf.pascal.effects {
 			this.currentLaboratoryObject.addEventListener(MouseEvent.MOUSE_OUT, removeGlow);
 			this.currentLaboratoryObject.addEventListener(MouseEvent.CLICK, scalingHandler);
 			this.portrait4.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
-			this.t3 = new XmlLoader();
-			this.t3.x = 1;
+			this.t3Url = t3Url;
+			this.t3MovieClip = new XmlLoader(this.t3Url, 16, 16, 30, 30);
+			this.t3MovieClip.fontFormat.size = 4;
 			
 		}	
 
@@ -96,7 +98,7 @@ package com.fdf.pascal.effects {
 			this.portrait4.getChildAt(1).visible = false;
 			this.portrait4.getChildAt(2).visible = false;
 			
-			this.portrait4.addChild(this.t3);
+			this.portrait4.addChild(this.t3MovieClip);
 			this.currentLaboratoryObject.useHandCursor = false;
 			this.tempLaboratoryObject.gotoAndStop(2);
 
@@ -111,7 +113,7 @@ package com.fdf.pascal.effects {
 		 * Zoom out
 		 */
 		function zoomOut(event:MouseEvent):void {
-			this.portrait4.removeChild(this.t3);
+			this.portrait4.removeChild(this.t3MovieClip);
 			this.portrait4.getChildAt(1).visible = true;
 			this.portrait4.getChildAt(2).visible = true;
 			this.currentLaboratoryObject.addEventListener(MouseEvent.MOUSE_OVER, addGlow);
