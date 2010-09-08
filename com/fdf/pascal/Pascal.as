@@ -38,7 +38,7 @@ package com.fdf.pascal {
 
 		public function Pascal(theStage, laboratoryObject : MovieClip, scaleWidth, scaleX = 0, scaleY = 0) {
 
-			trace("Constructor er loadet");
+			trace("Constructor er loadet for: " + laboratoryObject.name);
 
 			this.currentLaboratoryObject = laboratoryObject;
 			this.tempLaboratoryObject = laboratoryObject;
@@ -137,7 +137,7 @@ package com.fdf.pascal {
 		
 		// imageLoaded2 kaldes, når billedet er indlæst.
 		function addOverlayClick(e:Event):void {
-			trace("The animation has finished!");
+			//trace("The animation has finished!");
 			this.overlay.addEventListener(MouseEvent.CLICK, scalingHandler);
 		}
 
@@ -146,7 +146,6 @@ package com.fdf.pascal {
 		 */
 		function zoomOut(event:MouseEvent):void {
 			while (this.currentLaboratoryObject.numChildren) this.currentLaboratoryObject.removeChildAt(0);
-			trace(this.currentLaboratoryObject.numChildren);
 			this.tempLaboratoryObject.gotoAndStop(1);
 			
 			this.currentLaboratoryObject.addEventListener(MouseEvent.MOUSE_OVER, addGlow);

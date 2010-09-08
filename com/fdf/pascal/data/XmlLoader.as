@@ -21,12 +21,14 @@
 			public var textField : TextField;
 			public var canvas_mc : MovieClip;
 			public var contentTypes : Array;
-			private var t3Url : String;
+			private var tt_content_id : String;
 			public var fontFormat : TextFormat;
 			public var textX : Number;
 			public var textY : Number;
+			public var textWidth : Number;
+			public var textHeight : Number;
 			
-			function XmlLoader (t3Url : String, x : Number, y : Number, width : Number, height : Number) : void {
+			function XmlLoader (tt_content_id : String, x : Number, y : Number, width : Number, height : Number) : void {
 				
 				this.setContentTypes();
 				
@@ -38,13 +40,13 @@
 				//this.canvas_mc = new MovieClip();
 				this.textX = x;
 				this.textY = y;
-				this.graphics.drawRect( x, y, width, height );
-				this.graphics.endFill();
-				this.t3Url = t3Url;
+				this.tt_content_id = tt_content_id;
 				var myFont = new ZoomedInFont();
 				this.fontFormat = new TextFormat();
 				this.fontFormat.font = myFont.fontName;
 				this.fontFormat.size = 8;
+				this.textWidth = width;
+				this.textHeight = height;
 			
 				
 				this.getDataFromUrlAndRenderContent();
@@ -67,11 +69,15 @@
 			function renderBodytext():void {
 				this.textField = new TextField();
 				this.textField.defaultTextFormat = this.fontFormat;
-				this.textField.autoSize = TextFieldAutoSize.LEFT;
+				//this.textField.autoSize = TextFieldAutoSize.LEFT;
 				this.textField.htmlText = xmlData.data.row.bodytext;
 				this.textField.x = this.textX;
 				this.textField.y = this.textY;
+				this.textField.width = this.textWidth;
+				this.textField.height = this.textHeight;
 				this.textField.textColor = 0xFFFFFFFF;			
+				this.textField.wordWrap = true;
+				this.textField.selectable = false;
 				this.addChild(this.textField);
 			}
 			
@@ -89,8 +95,7 @@
 			}
 			
 			function getDataFromUrlAndRenderContent() : void {
-				//this.httpUrl = 'http://brianhauge.dk/index.php?id=1629&tx_t3flex_pi1[action]=SELECT&tx_t3flex_pi1[table]=tt_content&tx_t3flex_pi1[uid]=1974&no_cache=1';
-				this.httpUrl = this.t3Url;
+				this.httpUrl = 'http://leder.fdf.dk/index.php?id=2539&tx_t3flex_pi1[action]=SELECT&tx_t3flex_pi1[table]=tt_content&no_cache=1&tx_t3flex_pi1[uid]=' + this.tt_content_id;
 				this.urlLoader = new URLLoader();
 				this.urlLoader.load(new URLRequest(this.httpUrl));
 				this.urlLoader.addEventListener(Event.COMPLETE, function(e:Event) {
