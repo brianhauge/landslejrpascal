@@ -45,7 +45,7 @@ package com.fdf.pascal.handlers {
 			this.currentLaboratoryObject.addEventListener(MouseEvent.CLICK, scalingHandler);
 			this.labParent.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 			this.tt_content_id = tt_content_id;
-			this.t3MovieClip = new XmlLoader(this.tt_content_id, 16, 16, 60, 100);
+			this.t3MovieClip = new XmlLoader(this.tt_content_id, 14, 14, 62, 100);
 			this.t3MovieClip.fontFormat.size = 3;
 			
 		}	
@@ -88,7 +88,7 @@ package com.fdf.pascal.handlers {
 			this.currentLaboratoryObject.x = (this.currentLaboratoryObject.stage.stageWidth / 2) - (this.currentLaboratoryObject.width / 2) + this.moveX;
 			this.currentLaboratoryObject.y = (this.currentLaboratoryObject.stage.stageHeight / 2) - (this.currentLaboratoryObject.height / 2)  + this.moveY;
 			if(this.pos == "tv") var moveX1:Tween = new Tween(this.currentLaboratoryObject, "x", Strong.easeOut, this.originalX, 0, 1, true);
-			if(this.pos == "th") var moveX2:Tween = new Tween(this.currentLaboratoryObject, "x", Strong.easeOut, this.originalX, 70, 1, true);
+			if(this.pos == "th") var moveX2:Tween = new Tween(this.currentLaboratoryObject, "x", Strong.easeOut, this.originalX, 72, 1, true);
 			var moveY:Tween = new Tween(this.currentLaboratoryObject, "y", Bounce.easeOut, this.currentLaboratoryObject.y, 20, 1, true);
 			
 			/*
@@ -127,7 +127,7 @@ package com.fdf.pascal.handlers {
 			*/
 
 			if(this.pos == "tv")  var moveX1:Tween = new Tween(this.currentLaboratoryObject, "x", Strong.easeOut, 0, this.originalX, 1, true);
-			if(this.pos == "th")  var moveX2:Tween = new Tween(this.currentLaboratoryObject, "x", Strong.easeOut, 70, this.originalX, 1, true);
+			if(this.pos == "th")  var moveX2:Tween = new Tween(this.currentLaboratoryObject, "x", Strong.easeOut, 72, this.originalX, 1, true);
 			var moveY:Tween = new Tween(this.currentLaboratoryObject, "y", Bounce.easeOut, 20, this.originalY, 1, true);			
 		}
 
