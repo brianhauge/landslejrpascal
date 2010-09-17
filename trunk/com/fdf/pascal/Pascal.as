@@ -121,8 +121,14 @@ package com.fdf.pascal {
 			/*
 				centrer element og lidt transitions
 			*/
-			this.tempLaboratoryObject.x = (this.tempLaboratoryObject.stage.stageWidth / 2) - (this.tempLaboratoryObject.width / 2) + this.scaleX;
-			this.tempLaboratoryObject.y = (this.tempLaboratoryObject.stage.stageHeight / 2) - (this.tempLaboratoryObject.height / 2)  + this.scaleY;
+			
+			
+			var x1 = (this.tempLaboratoryObject.stage.stageWidth / 2) - (this.tempLaboratoryObject.width / 2) + this.scaleX;
+			var y1 = (this.tempLaboratoryObject.stage.stageHeight / 2) - (this.tempLaboratoryObject.height / 2)  + this.scaleY;
+			
+			var moveX:Tween = new Tween(this.tempLaboratoryObject, "x", Bounce.easeOut, this.originalX, x1, 1, true);
+			var moveY:Tween = new Tween(this.tempLaboratoryObject, "y", Bounce.easeOut, this.originalY, y1, 1, true);
+			
 			var myTransitionManager:TransitionManager = new TransitionManager(this.tempLaboratoryObject);
   			myTransitionManager.startTransition({type:Zoom, direction:Transition.IN, duration:1, easing:Bounce.easeOut});
 			myTransitionManager.addEventListener("allTransitionsInDone", addOverlayClick);
