@@ -13,6 +13,7 @@
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
+	import flash.system.Security;
 	
 		public class XmlLoader extends MovieClip {
 
@@ -33,7 +34,7 @@
 			function XmlLoader (tt_content_id : String, x : Number, y : Number, width : Number, height : Number) : void {
 				
 				this.setContentTypes();
-				
+				Security.allowDomain("*");
 /*				this.loader = new Loader();
 				
 				this.loader.contentLoaderInfo.addEventListener(ProgressEvent.PROGRESS, onLoadProgress);

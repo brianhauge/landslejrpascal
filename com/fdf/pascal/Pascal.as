@@ -61,7 +61,7 @@ package com.fdf.pascal {
 			//theStage.addEventListener(Event.RESIZE, onResize);
 			//theStage.onResize = function() {this.onResize()};
 
-			theStage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+			//theStage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 			
 		}	
 
@@ -89,6 +89,7 @@ package com.fdf.pascal {
 			*/
 			
 			this.currentLaboratoryObject.removeEventListener(MouseEvent.CLICK, scalingHandler);
+			this.stage.addEventListener(KeyboardEvent.KEY_DOWN, keyPressed);
 						
 			/*
 				opret overlay og tilfoej denne til stage, samt clickevent på overlay
@@ -151,6 +152,7 @@ package com.fdf.pascal {
 		 * Zoom out
 		 */
 		function zoomOut(event:MouseEvent):void {
+			this.stage.removeEventListener(KeyboardEvent.KEY_DOWN, keyPressed);
 			while (this.currentLaboratoryObject.numChildren) this.currentLaboratoryObject.removeChildAt(0);
 			this.tempLaboratoryObject.gotoAndStop(1);
 			
@@ -200,36 +202,14 @@ package com.fdf.pascal {
 		}
 
 		/**
-		 * Enlarges the current laboratoryObject
-		 */
-		public function enlargeLaboratoryObject() : void {}
-
-		/**
-		 * Reduces the current laboratoryObject
-		 */
-		public function reduceLaboratoryObject() : void {}
-
-        /**
-		 * Tilpas galleriet i forhold til st¿rrelsen p Flash (http://felix-sanchez.dk/3d-galleri-i-flash-og-actionscript-med-five3d/)
-         */
-        
-		public function onResize(event:Event) : void {
-            /*this._scene.x = Math.round(stage.stageWidth/2);
-            this._scene.y = Math.round(stage.stageHeight/2);*/
-        }
-
-
-		/**
 		 * Handler af onKeyDown
 		 */
-		public function onKeyDown(event:KeyboardEvent) : void {
+		public function keyPressed(event:KeyboardEvent) : void {
 			var key : uint = event.keyCode;
-			trace(key);
 			switch(key) {
 				//case Keyboard.ESCAPE :
 				case 27 :
-					//trace("Escape button pushed");
-					break;
+					trace("Escape button pushed");
 			}
 		}
 

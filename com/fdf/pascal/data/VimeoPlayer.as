@@ -26,6 +26,10 @@ package com.fdf.pascal.data {
   import flash.net.URLRequest;
   import flash.system.Security;
   import flash.utils.Timer;
+  import flash.display.MovieClip;
+  
+  import flash.events.EventDispatcher;
+  import flash.display.Stage;
 
 
   public class VimeoPlayer extends Sprite {
@@ -36,11 +40,17 @@ package com.fdf.pascal.data {
 
         private var player_width:int = 400;
         private var player_height:int = 300;
+		private var isloaded:Boolean = false;
+		private var theStage:Stage;
+		private var overlay_mc:MovieClip;
+		private var notloadedcounter:Number;
+		
 
         private var load_timer:Timer = new Timer(200);
 
-        public function VimeoPlayer(oauth_key:String, clip_id:int, w:int, h:int, fp_version:int = 10) {
+        public function VimeoPlayer(oauth_key:String, clip_id:int, w:int, h:int, theStage:Stage, fp_version:int = 10) {
             this.setDimensions(w, h);
+			this.notloadedcounter = 0;
 
             Security.allowDomain("*");
             Security.loadPolicyFile("http://vimeo.com/moogaloop/crossdomain.xml");
@@ -49,6 +59,15 @@ package com.fdf.pascal.data {
             var request:URLRequest = new URLRequest("http://api.vimeo.com/moogaloop_api.swf?oauth_key=" + oauth_key + "&clip_id=" + clip_id + "&width=" + w + "&height=" + h + "&fullscreen=0&fp_version=" + fp_version);
             loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onComplete);
             loader.load(request);
+			
+			// Adding overlay to stage to prevent clicking at the mail overlay before the video has been loaded
+			this.theStage = theStage;
+			this.overlay_mc = new MovieClip();
+			this.overlay_mc.graphics.beginFill(0x000000, 0.0);
+			this.overlay_mc.graphics.drawRect( 0, 0, 1200, 700 );
+			this.overlay_mc.graphics.endFill();
+			trace("Adding prevent-click-movie-overlay to stage");
+			this.theStage.addChild(this.overlay_mc);
         }
 
         private function setDimensions(w:int, h:int):void {
@@ -75,8 +94,16 @@ package com.fdf.pascal.data {
         /**
          * Wait for Moogaloop to finish setting up
          */
-        private function playerLoadedCheck(e:TimerEvent):void {
-            if (moogaloop.player_loaded) {
+        public function playerLoadedCheck(e:TimerEvent):void {
+			this.notloadedcounter += 1;
+			if (this.notloadedcounter == 50) {
+				trace("Removing prevent-click-movie-overlay from stage - video not loaded after 10 seconds");
+				this.theStage.removeChild(this.overlay_mc);
+			}
+            else if (moogaloop.player_loaded) {
+				//Removing overlay from stage to be able to click at overlay
+				trace("Removing prevent-click-movie-overlay from stage");
+				this.theStage.removeChild(this.overlay_mc);
                 // Moogaloop is finished configuring
                 load_timer.stop();
                 load_timer.removeEventListener(TimerEvent.TIMER, playerLoadedCheck);
@@ -87,8 +114,8 @@ package com.fdf.pascal.data {
 
                 stage.addEventListener(MouseEvent.MOUSE_MOVE, mouseMove);
 
-                dispatchEvent(new Event(Event.COMPLETE));
-            }
+                dispatchEvent(new Event(Event.COMPLETE));		
+			}
         }
 
         /**
