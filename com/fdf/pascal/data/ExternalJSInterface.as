@@ -1,5 +1,5 @@
-﻿package {
-    import flash.display.Sprite;
+﻿package com.fdf.pascal.data {
+    import flash.display.MovieClip;
     import flash.events.*;
     import flash.external.ExternalInterface;
     import flash.text.TextField;
@@ -7,7 +7,7 @@
     import flash.text.TextFieldType;
     import flash.text.TextFieldAutoSize;
 
-    public class ExternalInterfaceExample extends Sprite {
+    public class ExternalJSInterface {
         /*private var input:TextField;
         private var output:TextField;
         private var sendBtn:Sprite;*/
@@ -15,10 +15,10 @@
 		private var h:Number;
 		private var vimeoID:Number;
 
-        public function ExternalInterfaceExample(vimeoID,w,h,btn) {
-			this.w = w;
-			this.h = h;
-			this.vimeoID = vidmeoID;
+        public function ExternalJSInterface(vimeoID,btn,theStage) {
+			this.w = theStage.width;
+			this.h = theStage.height;
+			this.vimeoID = vimeoID;
 			btn.addEventListener(MouseEvent.CLICK, openVimeo);
 			
             /*input = new TextField();
@@ -50,7 +50,8 @@
 
             if (ExternalInterface.available) {
                 try {
-                    output.appendText("Adding callback...\n");
+                    //output.appendText("Adding callback...\n");
+					trace("Adding callback...\n");
                     ExternalInterface.addCallback("sendToActionScript", receivedFromJavaScript);
                     if (checkJavaScriptReady()) {
                         //output.appendText("JavaScript is ready.\n");
@@ -92,7 +93,7 @@
                 Timer(event.target).stop();
             }
         }
-        public function openVimeo():void {
+        public function openVimeo(event:MouseEvent):void {
             if (ExternalInterface.available) {
                 ExternalInterface.call("openVimeo", this.vimeoID, this.w, this.h);
             }
