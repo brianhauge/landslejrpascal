@@ -1,49 +1,73 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-	<head>
-		<title>test</title>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<style type="text/css" media="screen">
-		html, body { height:100%; background-color: #ffffff;}
-		body { margin:0; padding:0; overflow:hidden; }
-		#flashContent { width:100%; height:100%; }
-		</style>
-	</head>
-	<body>
-		<div id="flashContent">
-			<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="550" height="400" id="test" align="middle">
-				<param name="movie" value="test.swf" />
-				<param name="quality" value="high" />
-				<param name="bgcolor" value="#ffffff" />
-				<param name="play" value="true" />
-				<param name="loop" value="true" />
-				<param name="wmode" value="window" />
-				<param name="scale" value="showall" />
-				<param name="menu" value="true" />
-				<param name="devicefont" value="false" />
-				<param name="salign" value="" />
-				<param name="allowScriptAccess" value="sameDomain" />
-				<!--[if !IE]>-->
-				<object type="application/x-shockwave-flash" data="test.swf" width="550" height="400">
-					<param name="movie" value="test.swf" />
-					<param name="quality" value="high" />
-					<param name="bgcolor" value="#ffffff" />
-					<param name="play" value="true" />
-					<param name="loop" value="true" />
-					<param name="wmode" value="window" />
-					<param name="scale" value="showall" />
-					<param name="menu" value="true" />
-					<param name="devicefont" value="false" />
-					<param name="salign" value="" />
-					<param name="allowScriptAccess" value="sameDomain" />
-				<!--<![endif]-->
-					<a href="http://www.adobe.com/go/getflash">
-						<img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash player" />
-					</a>
-				<!--[if !IE]>-->
-				</object>
-				<!--<![endif]-->
-			</object>
-		</div>
-	</body>
-</html>
+﻿<html lang="en">
+ <head>
+ <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <title>ExternalInterfaceExample</title>
+ <script language="JavaScript">
+
+
+     var jsReady = false;
+     function isReady() {
+         return jsReady;
+     }
+     function pageInit() {
+         jsReady = true;
+         document.forms["form1"].output.value += "\n" + "JavaScript is ready.\n";
+     }
+     function thisMovie(movieName) {
+         if (navigator.appName.indexOf("Microsoft") != -1) {
+             return window[movieName];
+         } else {
+             return document[movieName];
+         }
+     } 
+     function sendToActionScript(value) {
+         thisMovie("ExternalInterfaceExample").sendToActionScript(value);
+     }
+	 
+     function openVimeo(id,w,h) {
+			
+			// open a welcome message as soon as the window loads
+			Shadowbox.open({
+				content:    '<iframe src="http://player.vimeo.com/video/'+id+'" width="'+w+'" height="'+h+'" frameborder="0"></iframe>',
+				player:     "html",
+				height:     h,
+				width:      w
+			});
+     }
+	 
+ </script>
+ <script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
+ <script type="text/javascript" src="js/shadowbox.js"></script>
+ <link rel="stylesheet" type="text/css" href="js/shadowbox.css">
+<script type="text/javascript">
+Shadowbox.init();
+</script>
+
+
+ </head>
+ <body onLoad="pageInit();">
+ <a rel="shadowbox" href="landslejr2006.html">iframe</a>
+
+     <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
+             id="ExternalInterfaceExample" width="500" height="375"
+             codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab">
+         <param name="movie" value="test.swf" />
+         <param name="quality" value="high" />
+         <param name="bgcolor" value="#869ca7" />
+         <param name="allowScriptAccess" value="sameDomain" />
+         <embed src="test.swf" quality="high" bgcolor="#869ca7"
+             width="500" height="375" name="test" align="middle"
+             play="true" loop="false" quality="high" allowScriptAccess="sameDomain"
+             type="application/x-shockwave-flash"
+             pluginspage="http://www.macromedia.com/go/getflashplayer">
+         </embed>
+     </object>
+ 
+     <form name="form1" onSubmit="return false;">
+         <input type="text" name="input" value="" />
+         <input type="button" value="Send" onClick="sendToActionScript(this.form.input.value);" /><br />
+         <textarea cols="60" rows="20" name="output" readonly="true">Initializing...</textarea>
+     </form>
+ 
+ </body>
+ </html>

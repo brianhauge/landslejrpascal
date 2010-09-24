@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+	<head>
+		<title>Professor Pascals Idelaboratorium</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+		<script type="text/javascript" src="js/swfobject.js"></script>
+        <script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
+
+		<script type="text/javascript">
+
+	            $(document).ready(function(){
+            	
+	            	var ratio = 700/1200;
+	            	var wr = ratio * 50
+					var obwidth = ($(window).width());
+	            	var obheight = (obwidth*ratio);
+	            	if(obheight > $(window).height()) {
+	            		var obheight = ($(window).height());
+						var obwidth = obheight/ratio;
+	            	}
+
+                    $('#myFlashContent').attr("width", obwidth  + 'px');
+	            	$('#myFlashContent').attr("height", obheight  + 'px');
+	            	$('#myFlashContent_IE').attr("width", obwidth  + 'px');
+	            	$('#myFlashContent_IE').attr("height",obheight  + 'px');
+                    $('#flashContainer').css("top", ($(window).height() - obheight-50)/2  + 'px');
+                    $('#flashContainer').css("left", ($(window).width() - obwidth)/2  + 'px');
+					$('#global-bottom-center').css("width", obwidth  + 'px');
+                        
+                    $(window).resize(function() {
+                        	
+                        var obwidth = ($(window).width());
+                        var obheight = (obwidth*ratio);
+                    	if(obheight > $(window).height()) {
+                        	var obheight = ($(window).height());
+                			var obwidth = obheight/ratio;
+                    	}
+
+						$('#flashContainer').css("top", ($(window).height() - obheight-50)/2  + 'px');
+						$('#flashContainer').css("left", ($(window).width() - obwidth)/2  + 'px');
+						$('#myFlashContent').attr("width", obwidth  + 'px');
+						$('#myFlashContent').attr("height", obheight  + 'px');
+						$('#myFlashContent_IE').attr("width", obwidth  + 'px');
+						$('#myFlashContent_IE').attr("height", obheight  + 'px');
+						$('#global-bottom-center').css("width", obwidth  + 'px');
+					});
+               });
+
+		    swfobject.registerObject("myFlashContent", "9.0.0");
+		    
+		     var jsReady = false;
+     function isReady() {
+         return jsReady;
+     }
+     function pageInit() {
+         jsReady = true;
+         document.forms["form1"].output.value += "\n" + "JavaScript is ready.\n";
+     }
+     function thisMovie(movieName) {
+         if (navigator.appName.indexOf("Microsoft") != -1) {
+             return window[movieName];
+         } else {
+             return document[movieName];
+         }
+     } 
+     function sendToActionScript(value) {
+         thisMovie("ExternalInterfaceExample").sendToActionScript(value);
+     }
+	 
+     function openVimeo(id,w,h) {
+			// open a welcome message as soon as the window loads
+			Shadowbox.open({
+				content:    '<iframe src="http://player.vimeo.com/video/'+id+'" width="'+w+'" height="'+h+'" frameborder="0"></iframe>',
+				player:     "html",
+				height:     h,
+				width:      w
+			});
+     }
+
+		</script>
+		 <script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
+ <script type="text/javascript" src="js/shadowbox.js"></script>
+ <link rel="stylesheet" type="text/css" href="js/shadowbox.css">
+<script type="text/javascript">
+Shadowbox.init();
+</script>
+
+		<style type="text/css" media="screen">
+		html, body { height:100%; background-color: #000;}
+		body { margin:0; padding:0; overflow:auto; font-family:Arial, Helvetica, sans-serif; }
+		#flashContainer { position: absolute;  }
+		#global-bottom {
+			background:#000;
+			bottom:0;
+			height:50px;
+			margin-bottom:0;
+			position:fixed;
+			width:100%;
+		}
+		
+		#global-bottom-center {
+			height:50px;
+			margin:0 auto;
+			text-align:right;
+		}
+		a img {
+			border: none;
+		}
+		
+		</style>
+	</head>
+    <body>
+        <div align="center" id="flashContainer">
+            <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="1200" height="700" id="myFlashContent" align="middle">
+                <param name="movie" value="FDF_Laboratory.swf" />
+                <param name="loop" value="false" />
+                <param name="menu" value="false" />
+                <param name="quality" value="best" />
+                <param name="scale" value="showall" />
+                <param name="swliveconnect" value="true" />
+                <param name="allowfullscreen" value="false" />
+                <param name="allowscriptaccess" value="always" />
+                <param name="allownetworking" value="all" />
+                <!--[if !IE]>-->
+                <object type="application/x-shockwave-flash" id="myFlashContent_IE" data="FDF_Laboratory.swf" width="1200" height="700" align="middle">
+                    <param name="loop" value="false" />
+                    <param name="menu" value="false" />
+                    <param name="quality" value="best" />
+                    <param name="scale" value="showall" />
+                    <param name="swliveconnect" value="true" />
+                    <param name="allowfullscreen" value="false" />
+                    <param name="allowscriptaccess" value="always" />
+                    <param name="allownetworking" value="all" />
+                <!--<![endif]-->
+                    <p>Det ser ud til at du ikke har installeret Flash Player. Du kan downloade den ved at klikke på linket herunder</p>
+                    <a href="http://www.adobe.com/go/getflashplayer">
+                        <img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash player" />
+                    </a>
+                <!--[if !IE]>-->
+                </object>
+                <!--<![endif]-->
+            </object>
+        </div>
+        <div id="global-bottom">
+        <div id="global-bottom-center"><a href="http://fdf.dk/"><img src="fdf_logo.jpg" /></a><a href="http://fdf.dk/landslejr"><img src="ll_logo.jpg" /></a></div>
+        </div>
+    </body>
+</html>
