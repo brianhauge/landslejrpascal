@@ -13,13 +13,18 @@
         private var sendBtn:Sprite;*/
 		private var w:Number;
 		private var h:Number;
-		private var vimeoID:Number;
+		private var videoid:String;
 
-        public function ExternalJSInterface(vimeoID,btn,theStage) {
+        public function ExternalJSInterface(videoid,source,btn,theStage) {
 			this.w = theStage.width;
 			this.h = theStage.height;
-			this.vimeoID = vimeoID;
-			btn.addEventListener(MouseEvent.CLICK, openVimeo);
+			this.videoid = videoid;
+			if(source == "vimeo") {
+				btn.addEventListener(MouseEvent.CLICK, openVimeo);
+			}
+			else if (source == "youtube") {
+				btn.addEventListener(MouseEvent.CLICK, openYoutube);
+			}
 			
             /*input = new TextField();
             input.type = TextFieldType.INPUT;
@@ -95,7 +100,13 @@
         }
         public function openVimeo(event:MouseEvent):void {
             if (ExternalInterface.available) {
-                ExternalInterface.call("openVimeo", this.vimeoID, this.w, this.h);
+                ExternalInterface.call("openVimeo", this.videoid, this.w-100, this.h-100);
+            }
+        }
+		
+		public function openYoutube(event:MouseEvent):void {
+            if (ExternalInterface.available) {
+                ExternalInterface.call("openYoutube", this.videoid, this.w-100, this.h-100);
             }
         }
     }

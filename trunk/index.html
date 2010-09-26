@@ -25,6 +25,10 @@
 	            	$('#myFlashContent_IE').attr("height",obheight  + 'px');
                     $('#flashContainer').css("top", ($(window).height() - obheight-50)/2  + 'px');
                     $('#flashContainer').css("left", ($(window).width() - obwidth)/2  + 'px');
+					$('.back').css("top", ($(window).height() - obheight-50)/2  + 'px');
+                    $('.back').css("left", ($(window).width() - obwidth)/2  + 'px');
+					$('.back img').css("width", obwidth  + 'px');
+	            	$('.back img').css("height",obheight  + 'px');
 					$('#global-bottom-center').css("width", obwidth  + 'px');
                         
                     $(window).resize(function() {
@@ -43,6 +47,10 @@
 						$('#myFlashContent_IE').attr("width", obwidth  + 'px');
 						$('#myFlashContent_IE').attr("height", obheight  + 'px');
 						$('#global-bottom-center').css("width", obwidth  + 'px');
+						$('.back').css("top", ($(window).height() - obheight-50)/2  + 'px');
+                    	$('.back').css("left", ($(window).width() - obwidth)/2  + 'px');
+						$('.back img').css("width", obwidth-2  + 'px');
+	            		$('.back img').css("height",obheight-2  + 'px');
 					});
                });
 
@@ -76,19 +84,33 @@
 				width:      w
 			});
      }
+	 
+	 function openYoutube(id,w,h) {
+			// open a welcome message as soon as the window loads
+			Shadowbox.open({
+				content:    '<iframe src="http://www.youtube.com/v/'+id+'" width="'+w+'" height="'+h+'" frameborder="0"></iframe>',
+				player:     "html",
+				height:     h,
+				width:      w
+			});
+     }
+	 
 
 		</script>
 		 <script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
  <script type="text/javascript" src="js/shadowbox.js"></script>
  <link rel="stylesheet" type="text/css" href="js/shadowbox.css">
 <script type="text/javascript">
-Shadowbox.init();
+Shadowbox.init({
+overlayOpacity: 0.0	
+});
 </script>
 
 		<style type="text/css" media="screen">
 		html, body { height:100%; background-color: #000;}
 		body { margin:0; padding:0; overflow:auto; font-family:Arial, Helvetica, sans-serif; }
-		#flashContainer { position: absolute;  }
+		#flashContainer, .back { position: absolute;  }
+		
 		#global-bottom {
 			background:#000;
 			bottom:0;
@@ -110,6 +132,7 @@ Shadowbox.init();
 		</style>
 	</head>
     <body>
+    	<div class="back"><img src="background.jpg" /></div>
         <div align="center" id="flashContainer">
             <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="1200" height="700" id="myFlashContent" align="middle">
                 <param name="movie" value="FDF_Laboratory.swf" />
