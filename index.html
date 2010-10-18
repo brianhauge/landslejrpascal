@@ -11,21 +11,20 @@
 	            $(document).ready(function(){
             	
 	            	var ratio = 700/1200;
-	            	var wr = ratio * 50
-					var obwidth = ($(window).width());
+					var obwidth = $(window).width()-50;
 	            	var obheight = (obwidth*ratio);
 	            	if(obheight > $(window).height()) {
-	            		var obheight = ($(window).height());
-						var obwidth = obheight/ratio;
+	            		var obheight = $(window).height();
+						var obwidth = (obheight/ratio);
 	            	}
 
                     $('#myFlashContent').attr("width", obwidth  + 'px');
 	            	$('#myFlashContent').attr("height", obheight  + 'px');
 	            	$('#myFlashContent_IE').attr("width", obwidth  + 'px');
 	            	$('#myFlashContent_IE').attr("height",obheight  + 'px');
-                    $('#flashContainer').css("top", ($(window).height() - obheight-50)/2  + 'px');
+                    $('#flashContainer').css("top", ($(window).height() - obheight)/2  + 'px');
                     $('#flashContainer').css("left", ($(window).width() - obwidth)/2  + 'px');
-					$('.back').css("top", ($(window).height() - obheight-50)/2  + 'px');
+					$('.back').css("top", ($(window).height() - obheight)/2  + 'px');
                     $('.back').css("left", ($(window).width() - obwidth)/2  + 'px');
 					$('.back img').css("width", obwidth  + 'px');
 	            	$('.back img').css("height",obheight  + 'px');
@@ -75,23 +74,17 @@
          thisMovie("ExternalInterfaceExample").sendToActionScript(value);
      }
 	 
-     function openVimeo(id,w,h) {
+     function openVideo(sourceType,id) {
+		 	height = document.height*0.8;
+			width = document.width*0.8;
 			// open a welcome message as soon as the window loads
+			if(sourceType == "vimeo") var videoSource = '<iframe src="http://player.vimeo.com/video/'+id+'" width="'+width+'" height="'+height+'" frameborder="0"></iframe>';
+			else if (sourceType == "youtube") var videoSource = '<iframe src="http://www.youtube.com/v/'+id+'" width="'+width+'" height="'+height+'" frameborder="0"></iframe>';
 			Shadowbox.open({
-				content:    '<iframe src="http://player.vimeo.com/video/'+id+'" width="'+w+'" height="'+h+'" frameborder="0"></iframe>',
+				content:    videoSource,
 				player:     "html",
-				height:     h,
-				width:      w
-			});
-     }
-	 
-	 function openYoutube(id,w,h) {
-			// open a welcome message as soon as the window loads
-			Shadowbox.open({
-				content:    '<iframe src="http://www.youtube.com/v/'+id+'" width="'+w+'" height="'+h+'" frameborder="0"></iframe>',
-				player:     "html",
-				height:     h,
-				width:      w
+				height:     height,
+				width:      width
 			});
      }
 	 
@@ -124,6 +117,7 @@ overlayOpacity: 0.0
 			height:50px;
 			margin:0 auto;
 			text-align:right;
+			padding: 8px 0 0 0;
 		}
 		a img {
 			border: none;
