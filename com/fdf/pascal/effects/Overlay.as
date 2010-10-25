@@ -34,8 +34,8 @@ package com.fdf.pascal.effects {
 		function addGlow(event:MouseEvent):void {
 			var filt:GlowFilter = new GlowFilter;
 			filt.color = 0xCCCC00;
-			filt.blurX = 9;
-			filt.blurY = 9;
+			filt.blurX = 19;
+			filt.blurY = 19;
 			quit_mc.filters = [filt];
 			quit_mc.buttonMode = true;
 			quit_mc.useHandCursor = true;
