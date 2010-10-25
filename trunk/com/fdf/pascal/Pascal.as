@@ -187,8 +187,8 @@ package com.fdf.pascal {
 		function addGlow(event:MouseEvent):void {
 			var filt:GlowFilter = new GlowFilter;
 			filt.color = 0xCCCC00;
-			filt.blurX = 9;
-			filt.blurY = 9;
+			filt.blurX = 30;
+			filt.blurY = 30;
 			this.currentLaboratoryObject.filters = [filt];
 			this.currentLaboratoryObject.buttonMode = true;
 			this.currentLaboratoryObject.useHandCursor = true;

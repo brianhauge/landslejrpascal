@@ -80,6 +80,7 @@
 			// open a welcome message as soon as the window loads
 			if(sourceType == "vimeo") var videoSource = '<iframe src="http://player.vimeo.com/video/'+id+'" width="'+width+'" height="'+height+'" frameborder="0"></iframe>';
 			else if (sourceType == "youtube") var videoSource = '<iframe src="http://www.youtube.com/v/'+id+'" width="'+width+'" height="'+height+'" frameborder="0"></iframe>';
+			else if (sourceType == "t3Page") var videoSource = '<iframe src="http://fdf.dk/index.php?id='+id+'" width="'+width+'" height="'+height+'" frameborder="0"></iframe>';
 			Shadowbox.open({
 				content:    videoSource,
 				player:     "html",
