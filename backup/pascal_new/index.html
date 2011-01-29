@@ -81,7 +81,7 @@
 			if(sourceType == "vimeo") var videoSource = '<iframe src="http://player.vimeo.com/video/'+id+'" width="700" height="547" frameborder="0" ALLOWTRANSPARENCY="true"></iframe>';
 			else if (sourceType == "youtube") var videoSource = '<iframe src="http://www.youtube.com/v/'+id+'" width="700" height="547" frameborder="0" ALLOWTRANSPARENCY="true"></iframe>';
 			else if (sourceType == "t3Page") var videoSource = '<iframe src="http://fdf.dk/index.php?id='+id+'" width="900" height="'+(document.documentElement.clientHeight-120)+'" frameborder="0" ALLOWTRANSPARENCY="true"></iframe>';
-			else if (sourceType == "fullLink") var videoSource = '<iframe src="'+id+'" width="710" height="600" frameborder="0" ALLOWTRANSPARENCY="true"></iframe>';
+			else if (sourceType == "fullLink") var videoSource = '<iframe src="'+id+'" width="700" height="547" frameborder="0" ALLOWTRANSPARENCY="true"></iframe>';
 			else if (sourceType == "spil") var videoSource = '<iframe src="spil/?id='+id+'" width="760" height="700" frameborder="0" ALLOWTRANSPARENCY="true"></iframe>';
 			Shadowbox.open({
 				content:    videoSource,
@@ -139,7 +139,7 @@ Shadowbox.init({
     	<div class="back"><img src="background.jpg" /></div>
         <div align="center" id="flashContainer">
             <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="1200" height="700" id="myFlashContent" align="middle">
-                <param name="movie" value="FDF_Laboratory.swf?id=01292011" />
+                <param name="movie" value="FDF_Laboratory.swf?id=01202011" />
                 <param name="loop" value="false" />
                 <param name="menu" value="false" />
                 <param name="quality" value="best" />
@@ -149,7 +149,7 @@ Shadowbox.init({
                 <param name="allowscriptaccess" value="always" />
                 <param name="allownetworking" value="all" />
                 <!--[if !IE]>-->
-                <object type="application/x-shockwave-flash" id="myFlashContent_IE" data="FDF_Laboratory.swf?id=01292011" width="1200" height="700" align="middle">
+                <object type="application/x-shockwave-flash" id="myFlashContent_IE" data="FDF_Laboratory.swf" width="1200" height="700" align="middle">
                     <param name="loop" value="false" />
                     <param name="menu" value="false" />
                     <param name="quality" value="best" />
@@ -159,7 +159,7 @@ Shadowbox.init({
                     <param name="allowscriptaccess" value="always" />
                     <param name="allownetworking" value="all" />
                 <!--<![endif]-->
-                    <p>Det ser ud til at du ikke har installeret Flash Player. Du kan downloade den ved at klikke på linket herunder</p>
+                    <p>Det ser ud til at du ikke har installeret Flash Player. Du kan downloade den ved at klikke p√• linket herunder</p>
                     <a href="http://www.adobe.com/go/getflashplayer">
                         <img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash player" />
                     </a>

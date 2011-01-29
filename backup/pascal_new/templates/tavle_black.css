@@ -1,0 +1,62 @@
+body {
+	margin: 0;
+	padding: 0;
+	color: #fff;
+	text-align: center;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	width: 882px;
+	background: #000;
+}
+
+a {
+	color: #ffffff !important;
+	text-decoration: underline !important;
+}
+
+img {
+	border: 0px;
+}
+
+div.pascal-content {
+	margin: 0;
+	text-align: left;
+	height: 400px;
+	padding: 10px 40px;
+	overflow: auto;
+}
+
+fieldset {border: none; padding: 0; margin: 10px 0}
+legend {display: none;}
+
+.x-window { color: #000; }
+th {
+	font-weight: bold !important;
+	border-bottom: 1px solid #fff;
+	padding: 5px 0 !important;
+}
+.tx-videoconnection-video-writecomment {
+	display: none;
+}
+
+.list_view_message_only table {width: 375px;}
+
+.tx-videoconnection-label {
+	margin: 10px 0 5px 0;
+	font-weight: bold;
+}
+
+.tx-videoconnection-video-category {
+	font-size: 10px;
+	margin: 0 0 15px 0;
+	color: #999;
+}
+
+.tx-comments-pi1 {
+	margin: 20px 0 0 0;
+	color: #999;
+}
+
+.tx-videoconnection-video-username {
+	font-weight: normal !important;
+}
