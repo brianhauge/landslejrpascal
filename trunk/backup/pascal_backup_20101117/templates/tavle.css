@@ -1,0 +1,73 @@
+body {
+	margin: 0;
+	padding: 0;
+	color: #fff;
+	text-align: center;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	width: 882px;
+}
+
+a {
+	color: #ffffff;
+}
+
+img {
+	border: 0px;
+}
+
+div.pascal-top {
+	background: url('tavle_top.png') no-repeat;
+	height: 30px;
+	padding: 30px 40px 0 0;
+	text-align: right;
+}
+
+div.pascal-top a {
+	float: right;
+	margin: 0 0 0 20px;
+}
+
+div.pascal-content {
+	margin: 0;
+	text-align: left;
+	height: 400px;
+	padding: 10px 40px;
+	overflow: auto;
+	background: url('tavle_middle.png') repeat-y;
+}
+
+div.pascal-left-content {
+	float: left;
+	width: 450px;
+}
+div.pascal-right-content {
+	float: right;
+	width: 300px;
+}
+
+div.pascal-bottom {
+	background: url('tavle_bottom.png') no-repeat;
+	height: 23px;
+}
+
+fieldset {border: none; padding: 0; margin: 10px 0}
+legend {display: none;}
+
+.x-window { color: #000; }
+th {
+	font-weight: bold !important;
+	border-bottom: 1px solid #fff;
+	padding: 5px 0 !important;
+}
+
+table.wfqbe_table_results td {
+	padding: 4px 5px 0 0 !important;
+}
+
+th.Forslag { width: 500px; }
+
+table.wfqbe_table_results {
+	width: 800px;
+	border-collapse: collapse;
+}
